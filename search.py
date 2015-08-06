@@ -7,6 +7,7 @@
 import time, re, sys
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from tkinter import Tk, Text, END, mainloop
 
 __author__ = "Owen Jow"
 __version__ = "1.0.0"
@@ -32,20 +33,27 @@ def search_for_pesto(driver, url):
     return re.search(r'[Pp]esto', pg_src) is not None
     
 def run(*args):
+    # Create the GUI for the program
+    window = Tk()
+    window.wm_title("pesto_check") # change the window title to pesto_check
+    text = Text(window, height=3, width=40)
+    text.pack()
+    
     """Searches specified websites for pesto and outputs the results."""
     driver = webdriver.PhantomJS("./phantomjs/bin/phantomjs")
     driver.wait = WebDriverWait(driver, 5)
     
     # Search UCB dining hall menus
-    print("ALERT: pesto in the DC today!" if search_for_pesto(driver, 
+    text.insert(END, "ALERT: pesto in the DC today!" if search_for_pesto(driver, 
             "http://goo.gl/VR8HpB") else "No pesto in the DC today :(")
     # Search the Cheese Board weekly menu
-    print("ALERT: pesto at Cheese Board this week!" if search_for_pesto(driver, 
-            "http://goo.gl/rKTzgY") else "No pesto at Cheese Board this week :(")
+    text.insert(END, "\nALERT: pesto at Cheese Board this week!" if search_for_pesto(driver, 
+            "http://goo.gl/rKTzgY") else "\nNo pesto at Cheese Board this week :(")
     # Search the Sliver weekly menu
-    print("ALERT: pesto at Sliver this week!" if search_for_pesto(driver, 
-            "http://goo.gl/tP422Q") else "No pesto at Sliver this week :(")
+    text.insert(END, "\nALERT: pesto at Sliver this week!" if search_for_pesto(driver, 
+            "http://goo.gl/tP422Q") else "\nNo pesto at Sliver this week :(")
     
+    mainloop()
     driver.quit()
 
 run(sys.argv) # run the overall program

@@ -58,7 +58,7 @@ def run(*args):
     window = Tk()
     window.wm_title("pesto_check") # change the window title to pesto_check
     text = Text(window, height=3, width=50, bg="black", padx=5, pady=5, 
-            highlightthickness=0)
+            highlightthickness=1)
     text.pack()
     
     # Set GUI position on screen (we'll put it on the upper-right hand corner)
@@ -79,8 +79,7 @@ def run(*args):
     # Search the Sliver weekly menu
     search_and_output(driver, "http://goo.gl/tP422Q", text, "SLIVER")
     
-    text.configure(state="disabled")
-        
+    text.configure(state="disabled") # there's no need to allow user input!
     mainloop()
     driver.quit()
 

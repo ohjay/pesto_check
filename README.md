@@ -1,5 +1,5 @@
 # pesto_check
-We all know that [pesto](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/BasilPesto.JPG/1920px-BasilPesto.JPG) is the greatest and most heavenly of all sauces... but where to get it? This program offers a solution [for residents of the UC Berkeley area], by scraping the websites of nearby restaurants known to occasionally offer dishes with pesto. Currently-searched businesses include UCB dining commons, Cheese Board, and Sliver Pizzeria.
+We all know that [pesto](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/BasilPesto.JPG/1920px-BasilPesto.JPG) is the greatest and most heavenly of all sauces... but where to get it? This program offers a solution [for residents of the UC Berkeley area], by scraping the websites of nearby restaurants known to occasionally offer dishes containing pesto. Currently-searched businesses include UCB dining commons, Cheese Board, and Sliver Pizzeria.
 
 To run, simply download all of the files and run the command `python3 search.py` through the command line. Note that the only platform that pesto_check currently supports is OS X, because that is the only platform to which the lead (and only) developer has current access.
 

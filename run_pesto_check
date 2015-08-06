@@ -1,0 +1,9 @@
+#!/bin/bash
+# run_pesto_check
+# Runs the pesto_check program (aka search.py).
+
+# The path on the system to the search.py script
+# (this path assumes that the script is being run from the pesto_check directory)
+script_path="./search.py"
+
+python3 "$script_path"

@@ -15,16 +15,13 @@ __version__ = "1.0.0"
 def search_sliver_and_output(driver, text):
     """Searches the Sliver website for pesto pizza and outputs to the text widget
     either the date that the pizza will be available or a 'not found' message."""
-    # Tag configs for different text color
-    text.tag_config("green", foreground="green")
-    text.tag_config("red", foreground="red")
-    
+    # Get the Sliver page source
     driver.get("http://goo.gl/tP422Q")
     pg_src = driver.page_source
     
     match_obj = re.search(r"\b[Pp]esto\b", pg_src)
     pesto_index = match_obj.start() if match_obj else -1
-    start_h5 = pg_src.rfind("<h5>", 0, pesto_index)
+    start_h5 = pg_src.rfind("<h5>", 0, pesto_index) # the date is contained in <h5> tags
     end_h5 = pg_src.rfind("</h5>", 0, pesto_index)
     
     if pesto_index != -1:
@@ -64,11 +61,6 @@ def search_and_output(driver, url, text, name, for_week=True):
     name -- The name of the establishment being searched (preferably in all caps)
     for_week -- A boolean specifying whether or not the results pertain to the whole week
     """
-    # Set up tag configs for green/red font color
-    text.tag_config("green", foreground="green")
-    text.tag_config("red", foreground="red")
-    
-    # Do the actual searching and outputting
     if search_for_pesto(driver, url):
         text.insert(END, name + " STATUS: Pesto available " \
                 + ("this week!\n" if for_week else "today!\n"), ("green",))
@@ -82,6 +74,10 @@ def run(*args):
     text = Text(window, height=3, width=65, bg="black", padx=5, pady=5, 
             highlightthickness=1)
     text.pack()
+    
+    # Tag configs for green/red font color
+    text.tag_config("green", foreground="green")
+    text.tag_config("red", foreground="red")
     
     # Set GUI position on screen (we'll put it on the upper-right hand corner)
     window.update_idletasks() # make sure that the width is up to date

@@ -12,6 +12,28 @@ from tkinter import Tk, Text, END, mainloop
 __author__ = "Owen Jow"
 __version__ = "1.0.0"
 
+def search_sliver_and_output(driver, text):
+    """Searches the Sliver website for pesto pizza and outputs to the text widget
+    either the date that the pizza will be available or a 'not found' message."""
+    # Tag configs for different text color
+    text.tag_config("green", foreground="green")
+    text.tag_config("red", foreground="red")
+    
+    driver.get("http://goo.gl/tP422Q")
+    pg_src = driver.page_source
+    
+    match_obj = re.search(r"\b[Pp]esto\b", pg_src)
+    pesto_index = match_obj.start() if match_obj else -1
+    start_h5 = pg_src.rfind("<h5>", 0, pesto_index)
+    end_h5 = pg_src.rfind("</h5>", 0, pesto_index)
+    
+    if pesto_index != -1:
+        text.insert(END, "SLIVER STATUS: Pesto available on " \
+                + pg_src[start_h5 + 4:end_h5] + "!", ("green",)) # +4 removes the <h5>
+    else:
+        text.insert(END, "SLIVER STATUS: No pesto :(\n", ("red",))
+    
+
 def search_for_pesto(driver, url):
     """Checks the specified website for the existence of pesto. The website
     is assumed to be some kind of eatery that sometimes serves food with pesto.
@@ -57,7 +79,7 @@ def run(*args):
     # Create the GUI for the program
     window = Tk()
     window.wm_title("pesto_check") # change the window title to pesto_check
-    text = Text(window, height=3, width=50, bg="black", padx=5, pady=5, 
+    text = Text(window, height=3, width=65, bg="black", padx=5, pady=5, 
             highlightthickness=1)
     text.pack()
     
@@ -77,7 +99,7 @@ def run(*args):
     # Search the Cheese Board weekly menu
     search_and_output(driver, "http://goo.gl/rKTzgY", text, "CHEESE BOARD")
     # Search the Sliver weekly menu
-    search_and_output(driver, "http://goo.gl/tP422Q", text, "SLIVER")
+    search_sliver_and_output(driver, text)
     
     text.configure(state="disabled") # there's no need to allow user input!
     mainloop()

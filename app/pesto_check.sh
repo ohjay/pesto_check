@@ -6,7 +6,7 @@
 # This path will need to be changed on your system
 
 ### CHANGE THIS: ###
-script_path="[PATH-TO-search.py]" # (ex. "/Users/owenjow/pesto_check/app/search.py)
+script_path="[PATH-TO-search.py]" # (ex. "/Users/owenjow/pesto_check/app/search.py")
 
 # Execute the actual Python search script
 # Example path to python3: /Library/Frameworks/Python.framework/Versions/3.4/bin/python3

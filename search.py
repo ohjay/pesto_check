@@ -97,6 +97,10 @@ def run(*args):
     # Search the Sliver weekly menu
     search_sliver_and_output(driver, text)
     
+    # Bring the Tkinter window to the front
+    window.lift()
+    window.attributes("-topmost", True)
+    
     text.configure(state="disabled") # there's no need to allow user input!
     mainloop()
     driver.quit()

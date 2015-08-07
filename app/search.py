@@ -87,7 +87,8 @@ def run(*args):
     window.geometry("%dx%d+%d+%d" % (size + (x, 0)))
     
     """Searches specified websites for pesto and outputs the results."""
-    driver = webdriver.PhantomJS("./phantomjs/bin/phantomjs")
+    # The path to the PhantomJS executable (shown below) will need to be changed on your system
+    driver = webdriver.PhantomJS("/Users/owenjow/pesto_check/phantomjs/bin/phantomjs")
     driver.wait = WebDriverWait(driver, 5)
     
     # Search UCB dining hall menus

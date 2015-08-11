@@ -93,7 +93,7 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>05C449DF-2D21-4F1F-9EAE-32732DC2700D</string>
+				<string>567246D0-A5A2-4BC8-98F1-44E451288839</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -103,9 +103,9 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>5D65ED86-F5FC-43E5-902B-B1A0C2B9F825</string>
+				<string>079998C1-AA8F-4963-96FA-D6B5BF032448</string>
 				<key>UUID</key>
-				<string>878A637F-9D32-4853-8A03-41FE1AB79C4B</string>
+				<string>0AD8B044-CA0D-4752-B461-A57679A7A0D2</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>

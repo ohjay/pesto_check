@@ -12,25 +12,41 @@ from tkinter import Tk, Text, END, mainloop
 __author__ = "Owen Jow"
 __version__ = "1.0.0"
 
-def search_sliver_and_output(driver, text):
-    """Searches the Sliver website for pesto pizza and outputs to the text widget
-    either the date that the pizza will be available or a 'not found' message."""
-    # Get the Sliver page source
-    driver.get("http://goo.gl/tP422Q")
+#####################################
+# Utility (search helper) functions # 
+#####################################
+
+def search_and_output_incl_date(driver, text, url, tag_type, name):
+    """Checks NAME's website (specified by the given url) for pesto, and also gets the date
+    that the pesto will be available. The date in question should be contained within 
+    the first TAG_TYPE html tags found before the occurrence of "pesto". When it has 
+    this information, the function will update the text widget with its findings.
+    
+    Arguments:
+    driver -- A Selenium webdriver
+    text -- The widget to be updated
+    url -- The url to be searched (as a string)
+    tag_type -- The type of HTML tag in which the date will be contained (ex. "h4" or "h5")
+    name -- the name of the establishment that is being checked
+    
+    Returns nothing, but updates the widget as desired.
+    """
+    # Get the site's page source
+    driver.get(url)
     pg_src = driver.page_source
     
     match_obj = re.search(r"\b[Pp]esto\b", pg_src)
     pesto_index = match_obj.start() if match_obj else -1
-    start_h5 = pg_src.rfind("<h5>", 0, pesto_index) # the date is contained in <h5> tags
-    end_h5 = pg_src.rfind("</h5>", 0, pesto_index)
+    start_h5 = pg_src.rfind("<" + tag_type + ">", 0, pesto_index) # the date is b/e <TAG_TYPE> tags
+    end_h5 = pg_src.rfind("</" + tag_type + ">", 0, pesto_index)
     
+    date_start = start_h5 + len(tag_type) + 2 # +len(tag_type)+2 removes the opening tag
     if pesto_index != -1:
-        text.insert(END, "SLIVER STATUS: Pesto available on " \
-                + pg_src[start_h5 + 4:end_h5] + "!", ("green",)) # +4 removes the <h5>
+        text.insert(END, name + " STATUS: Pesto available on " \
+                + pg_src[date_start:end_h5] + "!\n", ("green",))
     else:
-        text.insert(END, "SLIVER STATUS: No pesto :(\n", ("red",))
+        text.insert(END, name + " STATUS: No pesto :(\n", ("red",))
     
-
 def search_for_pesto(driver, url):
     """Checks the specified website for the existence of pesto. The website
     is assumed to be some kind of eatery that sometimes serves food with pesto.
@@ -66,7 +82,25 @@ def search_and_output(driver, url, text, name, for_week=True):
                 + ("this week!\n" if for_week else "today!\n"), ("green",))
     else:
         text.insert(END, name + " STATUS: No pesto :(\n", ("red",))
+        
+###########################################
+# Specialized restaurant search functions # 
+###########################################
+
+def search_sliver_and_output(driver, text):
+    """Searches the Sliver website for pesto pizza and outputs to the text widget
+    either the date that the pizza will be available or a 'not found' message."""
+    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h5", "SLIVER")
     
+def search_cheeseboard_and_output(driver, text):
+    """Searches the Cheese Board website for pesto pizza and outputs both the date 
+    and a confirmation if found. Otherwise it will output a std 'not found' message."""
+    search_and_output_incl_date(driver, text, "http://goo.gl/rKTzgY", "h4", "CHEESE BOARD")
+
+###################
+# Main subroutine # 
+###################
+
 def run(*args):
     # Create the GUI for the program
     window = Tk()
@@ -93,7 +127,7 @@ def run(*args):
     # Search UCB dining hall menus
     search_and_output(driver, "http://goo.gl/VR8HpB", text, "DC", False)
     # Search the Cheese Board weekly menu
-    search_and_output(driver, "http://goo.gl/rKTzgY", text, "CHEESE BOARD")
+    search_cheeseboard_and_output(driver, text)
     # Search the Sliver weekly menu
     search_sliver_and_output(driver, text)
     

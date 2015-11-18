@@ -90,7 +90,7 @@ def search_and_output(driver, url, text, name, for_week=True):
 def search_sliver_and_output(driver, text):
     """Searches the Sliver website for pesto pizza and outputs to the text widget
     either the date that the pizza will be available or a 'not found' message."""
-    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h5", "SLIVER")
+    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h3", "SLIVER")
     
 def search_cheeseboard_and_output(driver, text):
     """Searches the Cheese Board website for pesto pizza and outputs both the date 

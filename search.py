@@ -16,10 +16,10 @@ __version__ = "1.0.0"
 # Utility (search helper) functions # 
 #####################################
 
-def search_and_output_incl_date(driver, text, url, tag_type, name):
+def search_and_output_incl_date(driver, text, url, tag_type, name, alt_tag_type=None):
     """Checks NAME's website (specified by the given url) for pesto, and also gets the date
     that the pesto will be available. The date in question should be contained within 
-    the first TAG_TYPE html tags found before the occurrence of "pesto". When it has 
+    the last TAG_TYPE html tags found before the occurrence of "pesto". When it has 
     this information, the function will update the text widget with its findings.
     
     Arguments:
@@ -27,7 +27,8 @@ def search_and_output_incl_date(driver, text, url, tag_type, name):
     text -- The widget to be updated
     url -- The url to be searched (as a string)
     tag_type -- The type of HTML tag in which the date will be contained (ex. "h4" or "h5")
-    name -- the name of the establishment that is being checked
+    name -- The name of the establishment that is being checked
+    alt_tag_type -- An alternative to tag_type, in case the date location varies
     
     Returns nothing, but updates the widget as desired.
     """
@@ -35,10 +36,18 @@ def search_and_output_incl_date(driver, text, url, tag_type, name):
     driver.get(url)
     pg_src = driver.page_source
     
-    match_obj = re.search(r"\b[Pp]esto\b", pg_src)
+    match_obj = None
+    for match_obj in re.finditer(r"\b[Pp]esto\b", pg_src):
+        pass # use the final appearance
     pesto_index = match_obj.start() if match_obj else -1
     start_h5 = pg_src.rfind("<" + tag_type + ">", 0, pesto_index) # the date is b/e <TAG_TYPE> tags
     end_h5 = pg_src.rfind("</" + tag_type + ">", 0, pesto_index)
+    
+    if alt_tag_type: # we'll take the closer of the two, if both exist
+        start_alt = pg_src.rfind("<" + alt_tag_type + ">", 0, pesto_index)
+        if start_alt > start_h5: # (closer to the "pesto" occurrence)
+            start_h5 = start_alt
+            end_h5 = pg_src.rfind("</" + alt_tag_type + ">", 0, pesto_index)
     
     date_start = start_h5 + len(tag_type) + 2 # +len(tag_type)+2 removes the opening tag
     if pesto_index != -1:
@@ -90,7 +99,7 @@ def search_and_output(driver, url, text, name, for_week=True):
 def search_sliver_and_output(driver, text):
     """Searches the Sliver website for pesto pizza and outputs to the text widget
     either the date that the pizza will be available or a 'not found' message."""
-    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h3", "SLIVER")
+    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h3", "SLIVER", "h5")
     
 def search_cheeseboard_and_output(driver, text):
     """Searches the Cheese Board website for pesto pizza and outputs both the date 

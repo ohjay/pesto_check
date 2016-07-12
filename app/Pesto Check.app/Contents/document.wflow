@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>404</string>
+	<string>419</string>
 	<key>AMApplicationVersion</key>
-	<string>2.5</string>
+	<string>2.6</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -63,11 +63,9 @@
 # run_pesto_check
 # Runs the pesto_check program (aka search.py).
 
-# The path on the system to the app/search.py script
 script_path="/Users/owenjow/pesto_check/app/search.py"
-
-# Execute the actual Python search script
-/Library/Frameworks/Python.framework/Versions/3.4/bin/python3 "$script_path"</string>
+/Library/Frameworks/Python.framework/Versions/3.4/bin/python3 "$script_path"
+</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -92,7 +90,7 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>5E16007A-DD7C-450C-8EB4-A752E0609A75</string>
+				<string>D99E6453-379D-45C2-999A-78A6701C17AD</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -102,9 +100,9 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>BE0868C9-28E1-401A-A26A-F1F1E9F84E23</string>
+				<string>9AE25190-3B7F-4ED3-8AD3-772421017313</string>
 				<key>UUID</key>
-				<string>CFE1BFF1-7AA1-4CED-AC7C-83F17EB8DEE6</string>
+				<string>54F5A556-3203-4E3E-9ECB-57DFD4A8633C</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -177,12 +175,10 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:253.000000</string>
+				<string>309.000000:539.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>

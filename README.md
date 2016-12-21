@@ -1,4 +1,4 @@
-# pesto_check [v1.0.4]
+# pesto_check [v1.0.5]
 We all know that [pesto](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/BasilPesto.JPG/1920px-BasilPesto.JPG) is the greatest and most heavenly of all sauces... but where to get it? This program offers a solution [for residents of the UC Berkeley area], by scraping the websites of nearby restaurants known to occasionally offer dishes with pesto. Currently-searched businesses include the UCB dining commons, Cheese Board, and Sliver Pizzeria.
 
 To run, simply download all of the files and execute either `./run_pesto_check` or `python3 search.py` through the command line. A GUI will be launched in the upper-right hand corner of the screen: ![alt text](https://github.com/ohjay/pesto_check/blob/master/gui_example.png "A screenshot of the pesto check UI")
@@ -18,7 +18,7 @@ For those who want to avoid all that Terminal lingo, or simply speed up the Pest
 3. Within these files, there are three filepaths that need to be changed. They are as follows:
   + **Line 9 in `pesto_check.sh`**: Fill in the absolute path to `app/search.py`
   + **Line 15 in `pesto_check.sh`**: Fill in the absolute path to the `python3` command
-  + **Line 92 in `search.py`**: Fill in the absolute path to `bin/phantomjs` (this should be contained
+  + **Line 141 in `search.py`**: Fill in the absolute path to `bin/phantomjs` (this should be contained
     in the `phantomjs` folder that you just downloaded)
 4. Open Automator (if you don't know where it is, Spotlight it), and select **Application** as the workflow template.
 5. In the Utilities section of the Actions/Library sidebar, select **Run Shell Script**.

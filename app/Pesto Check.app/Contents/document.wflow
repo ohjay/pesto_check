@@ -63,7 +63,7 @@
 # run_pesto_check
 # Runs the pesto_check program (aka search.py).
 
-script_path="/Users/owenjow/pesto_check/app/search.py"
+script_path="/Users/owenjow/pesto_check/search.py"
 /Library/Frameworks/Python.framework/Versions/3.4/bin/python3 "$script_path"
 </string>
 					<key>CheckedForUserDefaultShell</key>
@@ -90,7 +90,7 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>D99E6453-379D-45C2-999A-78A6701C17AD</string>
+				<string>275DFFBD-133C-492A-9381-2CEDFC6C8D8E</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -100,9 +100,9 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>9AE25190-3B7F-4ED3-8AD3-772421017313</string>
+				<string>5B46FA79-F2CF-499D-AE7B-B49C9F19B57C</string>
 				<key>UUID</key>
-				<string>54F5A556-3203-4E3E-9ECB-57DFD4A8633C</string>
+				<string>55CB81A9-03CA-4517-838F-7E305675BB6C</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -175,10 +175,12 @@ script_path="/Users/owenjow/pesto_check/app/search.py"
 						<string>4</string>
 					</dict>
 				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:539.000000</string>
+				<string>309.000000:394.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>

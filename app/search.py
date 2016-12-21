@@ -10,13 +10,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from tkinter import Tk, Text, END, mainloop
 
 __author__ = "Owen Jow"
-__version__ = "1.0.0"
+__version__ = "1.0.5"
 
 #####################################
 # Utility (search helper) functions # 
 #####################################
 
-def search_and_output_incl_date(driver, text, url, tag_type, name, alt_tag_type=None):
+def search_and_output_incl_date(driver, text, url, tag_type, name, alt_tag_type=None, custom_end=None, newline=True):
     """Checks NAME's website (specified by the given url) for pesto, and also gets the date
     that the pesto will be available. The date in question should be contained within 
     the last TAG_TYPE html tags found before the occurrence of "pesto". When it has 
@@ -40,21 +40,25 @@ def search_and_output_incl_date(driver, text, url, tag_type, name, alt_tag_type=
     for match_obj in re.finditer(r"\b[Pp]esto\b", pg_src):
         pass # use the final appearance
     pesto_index = match_obj.start() if match_obj else -1
+    if pesto_index == -1:
+        text.insert(END, "%s STATUS: No pesto :(%s" % (name, "\n" if newline else ""), ("red",))
+        return
+    
     start_h5 = pg_src.rfind("<" + tag_type + ">", 0, pesto_index) # the date is b/e <TAG_TYPE> tags
-    end_h5 = pg_src.rfind("</" + tag_type + ">", 0, pesto_index)
+    if custom_end:
+        end_h5 = pg_src.rfind(custom_end, 0, pesto_index)
+    else:
+        end_h5 = pg_src.rfind("</" + tag_type + ">", 0, pesto_index)
     
     if alt_tag_type: # we'll take the closer of the two, if both exist
         start_alt = pg_src.rfind("<" + alt_tag_type + ">", 0, pesto_index)
         if start_alt > start_h5: # (closer to the "pesto" occurrence)
             start_h5 = start_alt
             end_h5 = pg_src.rfind("</" + alt_tag_type + ">", 0, pesto_index)
-    
+
     date_start = start_h5 + len(tag_type) + 2 # +len(tag_type)+2 removes the opening tag
-    if pesto_index != -1:
-        text.insert(END, name + " STATUS: Pesto available on " \
-                + pg_src[date_start:end_h5] + "!\n", ("green",))
-    else:
-        text.insert(END, name + " STATUS: No pesto :(\n", ("red",))
+    text.insert(END, "%s STATUS: Pesto available on %s!%s" % (name, \
+            pg_src[date_start:end_h5], "\n" if newline else ""), ("green",))
     
 def search_for_pesto(driver, url):
     """Checks the specified website for the existence of pesto. The website
@@ -99,12 +103,13 @@ def search_and_output(driver, url, text, name, for_week=True):
 def search_sliver_and_output(driver, text):
     """Searches the Sliver website for pesto pizza and outputs to the text widget
     either the date that the pizza will be available or a 'not found' message."""
-    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h3", "SLIVER", "h5")
+    search_and_output_incl_date(driver, text, "http://goo.gl/tP422Q", "h3", "SLIVER", "h5", newline=False)
     
 def search_cheeseboard_and_output(driver, text):
     """Searches the Cheese Board website for pesto pizza and outputs both the date 
     and a confirmation if found. Otherwise it will output a std 'not found' message."""
-    search_and_output_incl_date(driver, text, "http://goo.gl/rKTzgY", "h4", "CHEESE BOARD")
+    search_and_output_incl_date(driver, text, "http://goo.gl/rKTzgY", 'div class="date"><p',
+            "CHEESE BOARD", custom_end="</p></div>")
 
 ###################
 # Main subroutine # 
@@ -128,11 +133,12 @@ def run(*args):
     size = tuple(int(_) for _ in window.geometry().split('+')[0].split('x'))
     x = width - size[0]
     window.geometry("%dx%d+%d+%d" % (size + (x, 0)))
+    window.update_idletasks() # update again
     
     """Searches specified websites for pesto and outputs the results."""
     # The path to the PhantomJS executable (shown below) will need to be changed on your system
     # Example path: /Users/owenjow/pesto_check/phantomjs/bin/phantomjs
-    driver = webdriver.PhantomJS("[PATH-TO-phantomjs]") ### CHANGE THIS ###
+    driver = webdriver.PhantomJS("[ABSOLUTE-PATH-TO-phantomjs]") ### CHANGE THIS ###
     driver.wait = WebDriverWait(driver, 5)
     
     # Search UCB dining hall menus
